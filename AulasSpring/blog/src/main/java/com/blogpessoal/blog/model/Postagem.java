@@ -13,10 +13,6 @@ import javax.persistence.TemporalType;
 import org.springframework.lang.NonNull;
 
 
-
-
-
-
 @Entity // Aqui estou dizendo que essa classe é uma entidade
 @Table(name = "postagem") //--- esssa entidade vai virar uma tabel dentro do BD
 public class Postagem {
