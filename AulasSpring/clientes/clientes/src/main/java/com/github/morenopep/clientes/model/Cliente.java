@@ -9,12 +9,10 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-
-
-@Entity @Getter@Setter
+@Entity
+@Data //essa anotação cria os Getter, setters, Construtor vazio e com parametros e tbm o toString
 public class Cliente {
 	//Atributos da Classe
 	
