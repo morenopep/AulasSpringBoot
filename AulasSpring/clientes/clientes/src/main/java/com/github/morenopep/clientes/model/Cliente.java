@@ -11,13 +11,15 @@ import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+//import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
+//@Builder
 @Data //essa anotação cria os Getter, setters, Construtor vazio e com parametros e tbm o toString
 @NoArgsConstructor //Mantem um construtor sem argumentos
 @AllArgsConstructor //o lombok gera um construtor com todos os argumentos
@@ -33,7 +35,8 @@ public class Cliente {
 	@NotNull @Size(max = 11)
 		private String	cpf; //cpf do cliente
 	
-	@Column(name = "data_cadastro") 
+	@Column(name = "data_cadastro")
+	@JsonFormat(pattern = "dd/MM/yyyy") //Adiciona o fomato de data dia/mes/ano
 		private LocalDate dataCadastro; //Data que o cliente foi cadastrado
 	
 	
