@@ -2,6 +2,7 @@ package com.github.morenopep.clientes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,16 +22,30 @@ public class ClienteController {
 	@Autowired
 	private ClienteRepository repository;  //INJETANDO REPOSITORIO
 	
+	//esse metodo salva o cliente da base de dados e responde um StatusHttp q foi criado
+	
 	@PostMapping //Mapeia o metodo para uma requisão com o verbo post
 	@ResponseStatus(HttpStatus.CREATED) //mapeia o objeto de retorno para o corpo da resposta e vai em formato JSON
 		public Cliente salvar(@RequestBody Cliente cliente) {
 			return repository.save(cliente);
 		}
-
-	@GetMapping("{id}") //esse metodo vai buscar um cliente por id, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND
+	
+	 //esse metodo vai buscar um cliente por id, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND
+	@GetMapping("{id}")
 		public Cliente getById(@PathVariable Long id) {
 			return repository.findById(id)
 					.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
 	}
+	
+	
+	//Esse metodo Busca o cliente por Id e Delete da base, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND 
+	@DeleteMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+		public void deleteById(@PathVariable Long id) {
+		repository.findById(id).map( cliente -> {
+			repository.delete(cliente);
+			return Void.TYPE;
+			}).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
+		}
 }
 
