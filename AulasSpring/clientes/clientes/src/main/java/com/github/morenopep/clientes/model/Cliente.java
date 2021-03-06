@@ -2,6 +2,7 @@ package com.github.morenopep.clientes.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,8 @@ public class Cliente {
 	@NotNull @Size(max = 11)
 		private String	cpf; //cpf do cliente
 	
-	private LocalDate dataCadastro; //Data que o cliente foi cadastrado
+	@Column(name = "data_cadastro") 
+		private LocalDate dataCadastro; //Data que o cliente foi cadastrado
 	
 	
 }
