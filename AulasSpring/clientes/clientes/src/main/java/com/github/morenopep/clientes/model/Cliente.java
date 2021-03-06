@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -35,5 +36,10 @@ public class Cliente {
 	@Column(name = "data_cadastro") 
 		private LocalDate dataCadastro; //Data que o cliente foi cadastrado
 	
+	
+	@PrePersist //esse metodo insere a data automaticamento no banco
+	public void prePersist() {
+		setDataCadastro(LocalDate.now());
+	}
 	
 }
