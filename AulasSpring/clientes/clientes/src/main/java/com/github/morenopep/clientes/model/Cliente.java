@@ -10,10 +10,16 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data //essa anotação cria os Getter, setters, Construtor vazio e com parametros e tbm o toString
+@NoArgsConstructor //Mantem um construtor sem argumentos
+@AllArgsConstructor //o lombok gera um construtor com todos os argumentos
 public class Cliente {
 	//Atributos da Classe
 	
