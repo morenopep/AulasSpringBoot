@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -29,13 +32,13 @@ public class Cliente {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Auto incremente do BD
 		private Long id; //id do Cliente
 	
-	@NotNull @Size(min = 2, max = 100, message = "Minimo de 2 letras e maximo 100")
+	@NotEmpty @NotNull @Size(min = 2, max = 100, message = "Minimo de 2 letras e maximo 100")
 		private String nome; //Nome do cliente
 	
-	@NotNull @Size(max = 11)
+	@CPF @NotNull @Size(max = 11)
 		private String	cpf; //cpf do cliente
 	
-	@Column(name = "data_cadastro")
+	@Column(name = "data_cadastro", updatable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy") //Adiciona o fomato de data dia/mes/ano
 		private LocalDate dataCadastro; //Data que o cliente foi cadastrado
 	
