@@ -29,13 +29,18 @@ import lombok.NoArgsConstructor;
 public class Cliente {
 	//Atributos da Classe
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Auto incremente do BD
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Auto incremente do BD
 		private Long id; //id do Cliente
 	
-	@NotEmpty @NotNull @Size(min = 2, max = 100, message = "Minimo de 2 letras e maximo 100")
+	@NotEmpty	
+	@NotNull(message = "{campo.nome.obrigatorio}") 
+	@Size(min = 2, max = 100, message = "Minimo de 2 letras e maximo 100")
 		private String nome; //Nome do cliente
 	
-	@CPF @NotNull @Size(max = 11)
+	@CPF(message = "{campo.cpf.invalido}") 
+	@NotNull(message = "{campo.cpf.obrigatorio}") 
+	@Size(max = 11)
 		private String	cpf; //cpf do cliente
 	
 	@Column(name = "data_cadastro", updatable = false)

@@ -3,6 +3,8 @@ package com.github.morenopep.clientes.controller;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +34,12 @@ public class ClienteController {
 	
 	@PostMapping //Mapeia o metodo para uma requisão com o verbo post
 	@ResponseStatus(HttpStatus.CREATED) //mapeia o objeto de retorno para o corpo da resposta e vai em formato JSON
-		public Cliente salvar(@RequestBody Cliente cliente) {
+		public Cliente salvar(@RequestBody @Valid Cliente cliente) {
 			return repository.save(cliente);
 		}
 	
 	 //esse metodo vai buscar um cliente por id, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND
+	
 	@GetMapping("{id}")
 		public Cliente getById(@PathVariable Long id) {
 			return repository.findById(id)
@@ -45,6 +48,7 @@ public class ClienteController {
 	
 	
 	//Esse metodo Busca o cliente por Id e Delete da base e responde um Status 204 falando que funcionou o delte, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND 
+	
 	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void deleteById(@PathVariable Long id) {
@@ -66,9 +70,9 @@ public class ClienteController {
 //		}
 	
 	@PutMapping
-	public ResponseEntity<Cliente> putCliente(@Validated @RequestBody Cliente cliente){
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(cliente));
-	}
+		public ResponseEntity<Cliente> putCliente(@Validated @RequestBody Cliente cliente){
+			return ResponseEntity.status(HttpStatus.OK).body(repository.save(cliente));
+		}
 
 	
 	
