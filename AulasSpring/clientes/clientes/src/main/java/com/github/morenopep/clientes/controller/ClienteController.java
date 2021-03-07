@@ -1,11 +1,17 @@
 package com.github.morenopep.clientes.controller;
 
+import java.util.Optional;
+import java.util.function.Function;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,7 +44,7 @@ public class ClienteController {
 	}
 	
 	
-	//Esse metodo Busca o cliente por Id e Delete da base, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND 
+	//Esse metodo Busca o cliente por Id e Delete da base e responde um Status 204 falando que funcionou o delte, se não encontrar vai mostrar um erro HttpStatus.NOT_FOUND 
 	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void deleteById(@PathVariable Long id) {
@@ -47,5 +53,24 @@ public class ClienteController {
 			return Void.TYPE;
 			}).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
 		}
+	
+	//Ess metodo busca o cliente por id e Atualiza alguma informação
+//	@PutMapping("{id}")
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//		public void putAtualizar(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
+//			repository
+//			.findById(id).map(cliente -> {
+//				clienteAtualizado.setId( cliente.getId() );
+//				repository.save(clienteAtualizado);
+//			}).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
+//		}
+	
+	@PutMapping
+	public ResponseEntity<Cliente> putCliente(@Validated @RequestBody Cliente cliente){
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(cliente));
+	}
+
+	
+	
 }
 
