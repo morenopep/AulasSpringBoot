@@ -43,7 +43,7 @@ public class ClienteController {
 	@GetMapping("{id}")
 		public Cliente getById(@PathVariable Long id) {
 			return repository.findById(id)
-					.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
+					.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado") );
 	}
 	
 	
@@ -55,7 +55,7 @@ public class ClienteController {
 		repository.findById(id).map( cliente -> {
 			repository.delete(cliente);
 			return Void.TYPE;
-			}).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );
+			}).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado") );
 		}
 	
 	//Ess metodo busca o cliente por id e Atualiza alguma informação
@@ -73,6 +73,8 @@ public class ClienteController {
 		public ResponseEntity<Cliente> putCliente(@Validated @RequestBody Cliente cliente){
 			return ResponseEntity.status(HttpStatus.OK).body(repository.save(cliente));
 		}
+	
+	
 
 	
 	

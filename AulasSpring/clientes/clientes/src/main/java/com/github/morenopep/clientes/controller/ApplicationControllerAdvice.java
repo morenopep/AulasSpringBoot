@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.github.morenopep.clientes.controller.exception.ApiErrors;
 
@@ -28,5 +30,14 @@ public class ApplicationControllerAdvice {
 		.map(ObjectError -> ObjectError.getDefaultMessage())
 		.collect( Collectors.toList() );
 		return new ApiErrors(messages);
-	}	
+	}
+	
+	@ExceptionHandler(ResponseStatusException.class)
+	public ResponseEntity handleResponseStatusException(ResponseStatusException ex) {
+		String messagemErro = ex.getMessage();
+		HttpStatus codigoStatus = ex.getStatus();
+		ApiErrors apiErrors = new ApiErrors(messagemErro); 
+		return new ResponseEntity(apiErrors, codigoStatus);
+		
+	}
 }
